@@ -1,0 +1,52 @@
+<div>
+ <div style="max-width: 480px; margin: 32px auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <h2 style="color: #2E8BC0; margin-bottom: 20px; text-align: center;">Upload .bin File</h2>
+  
+  <div style="display: flex; gap: 12px; justify-content: center; align-items: center;">
+    <input 
+      type="file" 
+      accept=".bin" 
+      (change)="onFileSelected($event)"
+      style="padding: 6px; border-radius: 6px; border: 1px solid #92bce3; background: #eaf6fb; cursor: pointer;"
+    />
+    <button 
+      (click)="onUpload()" 
+      [disabled]="!selectedFile || loading"
+      style="background-color: #2E8BC0; color: white; border: none; border-radius: 6px; padding: 8px 24px; font-weight: bold; cursor: pointer;"
+      [style.opacity]="(!selectedFile || loading) ? 0.6 : 1"
+    >
+      {{ loading ? 'Uploading...' : 'Upload' }}
+    </button>
+  </div>
+
+  <p *ngIf="error" style="color: #D93025; font-weight: 600; margin-top: 16px; text-align: center;">
+    {{ error }}
+  </p>
+  
+  <p *ngIf="loading" style="color: #555; margin-top: 16px; text-align: center;">
+    Uploading, please wait...
+  </p>
+</div>
+  <div style="max-width: 600px; margin: 36px auto; font-family: 'Segoe UI', Arial, sans-serif;">
+  <h2 style="text-align: center; color: #2E8BC0; letter-spacing: 1px;">Parsed Messages</h2>
+  <table *ngIf="messages.length > 0" style="width:100%; border-radius:8px; overflow:hidden; box-shadow: 0 1px 6px rgba(32,33,36,.28); background:#fff;">
+    <thead>
+      <tr style="background:#2E8BC0; color:#fff">
+        <th style="padding:12px 16px; font-size: 1.05em;">Sequence #</th>
+        <th style="padding:12px 16px;">Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let msg of messages; let i = index" 
+          [style.background]="i % 2 === 0 ? '#F0F7FA' : '#fff'"
+          style="transition: background 0.2s;">
+        <td style="padding:10px 16px; font-weight:bold; color: #15588A">{{ msg.sequenceNumber }}</td>
+        <td style="padding:10px 16px;">{{ msg.message }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="messages.length === 0" style="margin: 24px 0; text-align:center; color:#6c757d;">
+    <em>No messages to display.</em>
+  </div>
+</div>
+</div>
